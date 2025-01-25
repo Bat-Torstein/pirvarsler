@@ -22,23 +22,22 @@ jobs:
       with:
         fetch-depth: 0
 
-    # Setup .NET environment
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0
 
-    # Restore dependencies
     - name: Restore Dependencies
       run: dotnet restore
-
-    # Archive the Windows Executable
+    
+    - name: Build Windows Executable
+      run: dotnet publish -c Release -r win-x64 --self-contained true -o ./publish
+      
     - name: Archive Published Executable
       run: Compress-Archive -Path ./publish/* -DestinationPath ./pirvarsler.zip
 
-    # Upload the Artifact
     - name: Upload Executable
       uses: actions/upload-artifact@v3
       with:
-        name: windows-console-app
+        name: Pirvarsler
         path: ./pirvarsler.zip
