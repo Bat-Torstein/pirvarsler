@@ -6,7 +6,7 @@ try
   var now = DateTime.Now;
   var config = Config.ReadConfig() ?? throw new Exception("Invalid or missing configuration");
   var url = UriBuilder.BuildUri(now, config);
-  Console.WriteLine(url);
+ 
   var httpClient = new HttpClient();
 
   var response = await httpClient.GetAsync(url);
@@ -18,8 +18,6 @@ try
     ?.Result.Forecasts) ?? throw new Exception("Unable to convert object to forecast!");
 
   var forecastsAboveLimit = forecasts.Where(f => (f.HigherPercentile?.Value ?? f.Measurement.Value) > config.NotificationLimit);
-
-  Console.WriteLine(forecastsAboveLimit);
 
   if (!forecastsAboveLimit.Any())
   {
@@ -33,7 +31,7 @@ try
     var date = DateTime.Parse(firstAboveLimit.DateTime).ToString("dd. MMM", new CultureInfo("nb-NO"));
     var times = forecastsAboveLimit.Select(c => DateTime.Parse(c.DateTime).ToString("HH:mm"));
     var message = $"Det er meldt høy vannstand over {config.NotificationLimit} cm {date} kl {string.Join(", ", times)}. Data er levert av © Kartverket";
-    MessageSender.SendMessage(message);
+    await MessageSender.SendMessage(message, config.SlackChannel);
   }
 }
 

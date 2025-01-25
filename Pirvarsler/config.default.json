@@ -6,5 +6,6 @@
     "interval": 60,
     "notificationLimit": 330,
     "predictionHours": 24,
-    "aliveMessageDays": 14
+    "aliveMessageDays": 14,
+    "slackChannel": "#pirgjengen"
 }
