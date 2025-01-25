@@ -10,6 +10,7 @@ public class Config
   public required double NotificationLimit { get; set; }
   public required int PredictionHours { get; set; }
   public required int AliveMessageDays { get; set; }
+  public required string SlackChannel { get; set; }
 
   public static Config? ReadConfig()
   {
