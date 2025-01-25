@@ -4,7 +4,7 @@
     "longitude": "10.40257",
     "place": "Pirsenteret",
     "interval": 60,
-    "notificationLimit": 280,
+    "notificationLimit": 330,
     "predictionHours": 24,
     "aliveMessageDays": 14
 }
