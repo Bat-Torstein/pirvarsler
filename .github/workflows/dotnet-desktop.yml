@@ -34,7 +34,7 @@ jobs:
       run: dotnet publish -c Release -r win-x64 -o ./publish
       
    - name: Upload Executable
-      uses: actions/upload-artifact@v3
-      with:
-        name: Pirvarsler
-        path: ./publish
+     uses: actions/upload-artifact@v3
+     with:
+       name: Pirvarsler
+       path: ./publish
