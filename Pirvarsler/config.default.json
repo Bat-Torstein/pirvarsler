@@ -1,0 +1,10 @@
+{
+    "baseUrl": "https://www.kartverket.no/api/vsl/waterLevels/",
+    "latitude": "63.44133",
+    "longitude": "10.40257",
+    "place": "Pirsenteret",
+    "interval": 60,
+    "notificationLimit": 280,
+    "predictionHours": 24,
+    "aliveMessageDays": 14
+}
