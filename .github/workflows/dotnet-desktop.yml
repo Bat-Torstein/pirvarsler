@@ -14,25 +14,13 @@ jobs:
       matrix:
         configuration: [Release]
 
-    runs-on: ubuntu-latest
-
-    env:
-      Solution_Name: Pirvarsler.sln
-      #Test_Project_Path: test-project-path
-      #Wap_Project_Directory: wap-project-directory-name
-      #Wap_Project_Path: wap-project-path
+    runs-on: windows-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-
-    # Install the .NET Core workload
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
 
     # Setup .NET environment
     - name: Setup .NET
@@ -44,17 +32,13 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore
 
-    # Build the project
-    - name: Build Project
-      run: dotnet publish -c Release -o ./publish
- 
-    # Archive the built app
-    - name: Archive Published Build
-      run: zip -r ./pirvarsler.zip ./publish
+    # Archive the Windows Executable
+    - name: Archive Published Executable
+      run: Compress-Archive -Path ./publish/* -DestinationPath ./pirvarsler.zip
 
-    # Step 6: Upload artifact
-    - name: Upload Artifact
+    # Upload the Artifact
+    - name: Upload Executable
       uses: actions/upload-artifact@v3
       with:
-        name: Upload artifact
+        name: windows-console-app
         path: ./pirvarsler.zip
