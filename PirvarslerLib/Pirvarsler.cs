@@ -1,11 +1,12 @@
 using System.Globalization;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace PirvarslerLib;
 
 public class Pirvarsler
 {
-  public static async Task CheckAndNotify()
+  public static async Task CheckAndNotify(ILogger logger)
   {
     var now = DateTime.Now;
     var config = Config.ReadConfig() ?? throw new Exception("Invalid or missing configuration");
@@ -26,7 +27,7 @@ public class Pirvarsler
     if (!forecastsAboveLimit.Any())
     {
       Console.WriteLine("All clear");
-      Logger.LogOperation($"No forecast items above {config.NotificationLimit} cm");
+      logger.LogInformation($"No forecast items above {config.NotificationLimit} cm");
       // TODO: Check number of days since last message and post alive message
     }
     else
@@ -35,7 +36,7 @@ public class Pirvarsler
       var date = DateTime.Parse(firstAboveLimit.DateTime).ToString("dd. MMM", new CultureInfo("nb-NO"));
       var times = forecastsAboveLimit.Select(c => DateTime.Parse(c.DateTime).ToString("HH:mm"));
       var message = $"Det er meldt høy vannstand over {config.NotificationLimit} cm {date} kl {string.Join(", ", times)}. Data er levert av © Kartverket";
-      await MessageSender.SendMessage(message, config.SlackChannel);
+      await MessageSender.SendMessage(logger, message, config.SlackChannel);
     }
   }
 }

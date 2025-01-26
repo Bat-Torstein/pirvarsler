@@ -1,5 +1,6 @@
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 public class MessageSender
@@ -7,28 +8,27 @@ public class MessageSender
   private static readonly string SlackApiUrl = "https://slack.com/api/chat.postMessage";
 
 
-  public static async Task SendMessage(string message, string slackChannel)
+  public static async Task SendMessage(ILogger logger, string message, string slackChannel)
   {
     var slackApiToken = Environment.GetEnvironmentVariable("SLACK_API_TOKEN");
     try
     {
-      Console.WriteLine(message);
-
       if (slackApiToken != null)
       {
         var response = await PostMessageToSlack(slackApiToken, message, slackChannel);
         if (response)
         {
-          Logger.LogMessage(message);
+          logger.LogInformation($"Notification sent: {message}");
         }
         else
         {
-          Logger.LogOperation("Failed to post to slack");
+          logger.LogError("Failed to post to slack");
         }
       }
       else
       {
-        Logger.LogOperation("No slack token found - not posting to slack");
+        logger.LogInformation("No slack token found - not posting to slack");
+        logger.LogInformation(message);
       }
 
       static async Task<bool> PostMessageToSlack(string token, string message, string slackChannel)
@@ -51,7 +51,7 @@ public class MessageSender
     }
     catch (Exception ex)
     {
-      Logger.LogOperation($"Message was not sent! {ex.Message}");
+      logger.LogError($"Message was not sent! {ex.Message}");
     }
   }
 }
