@@ -1,3 +1,8 @@
 {
     "dotnet.defaultSolution": "Pirvarsler.sln",
+    "azureFunctions.deploySubpath": "PirvarslerFunction/bin/Release/net8.0/publish",
+    "azureFunctions.projectLanguage": "C#",
+    "azureFunctions.projectRuntime": "~4",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "publish (functions)",
 }
