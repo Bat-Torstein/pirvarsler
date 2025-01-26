@@ -16,7 +16,7 @@ namespace Pirvarsler.Function
         }
 
         [Function("PirvarslerTrigger")]
-        public async Task Run([TimerTrigger("0 19 * * * *")] TimerInfo myTimer)
+        public async Task Run([TimerTrigger("0 0 19 * * *")] TimerInfo myTimer)
         {
             try
             {

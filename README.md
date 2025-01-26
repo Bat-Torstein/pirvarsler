@@ -29,5 +29,13 @@ Start azurite blob storage from command palette.
 In local.settings.json set "AzureWebJobsStorage": "UseDevelopmentStorage=true",
 Set the timer trigger to once each minute : "0 * * * * *"
 
+Deploying the azure functions app
+---------------------------------
+For now this is done manually:
+
+In Command palette select azure sign in
+In Command Palette select Azure Functions deploy and then PirvarslerFunction
+
+
 
 
