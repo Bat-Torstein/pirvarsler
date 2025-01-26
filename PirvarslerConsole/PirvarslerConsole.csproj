@@ -7,13 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
+  <Target Name="CopyConfigFile" AfterTargets="Publish">
+    <Copy SourceFiles="..\config.default.json" DestinationFolder="$(PublishDir)" />
+  </Target>
 
    <ItemGroup>
-    <None Update="config.default.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    </ItemGroup>
+     <ProjectReference Include="..\PirvarslerLib\PirvarslerLib.csproj" />
+   </ItemGroup>
 </Project>
