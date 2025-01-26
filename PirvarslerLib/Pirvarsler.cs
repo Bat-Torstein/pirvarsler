@@ -34,7 +34,7 @@ public class Pirvarsler
     {
       var firstAboveLimit = forecastsAboveLimit.First();
       var date = DateTime.Parse(firstAboveLimit.DateTime).ToString("dd. MMM", new CultureInfo("nb-NO"));
-      var times = forecastsAboveLimit.Select(c => DateTime.Parse(c.DateTime).ToString("HH:mm"));
+      var times = forecastsAboveLimit.Select(c => DateTimeOffset.Parse(c.DateTime).ToString("HH:mm"));
       var message = $"I morgen {date} er det meldt høy vannstand over {config.NotificationLimit} cm. Varselet gjelder for følgende klokkeslett: {string.Join(", ", times)}. Data er levert av © Kartverket";
       await MessageSender.SendMessage(logger, message, config.SlackChannel);
     }
