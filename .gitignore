@@ -2,3 +2,4 @@ bin
 obj
 __blobstorage__
 __azurite*
+.vs
